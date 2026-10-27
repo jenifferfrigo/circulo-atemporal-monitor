@@ -2,8 +2,9 @@ name: Daytime Circulo API health
 
 on:
   schedule:
-    # UTC 11:03-00:58 = Sao Paulo 08:03-21:58, approximately every 5 minutes.
-    - cron: '3-58/5 0,11-23 * * *'
+    # UTC 11:06-00:56 = Sao Paulo 08:06-21:56, approximately every 5 minutes.
+    # Best-effort: GitHub schedules can be delayed or dropped.
+    - cron: '6-56/5 0,11-23 * * *'
   workflow_dispatch:
 
 permissions: {}
@@ -31,6 +32,7 @@ jobs:
           from zoneinfo import ZoneInfo
 
           current = datetime.now(ZoneInfo('America/Sao_Paulo'))
+          print(f'Health monitor executed at {current.isoformat()}')
           if not 8 <= current.hour < 22:
               print('Outside the 08:00-22:00 Sao Paulo window; no request sent.')
               sys.exit(0)
@@ -49,7 +51,7 @@ jobs:
                   data = json.loads(payload)
                   if data.get('status') != 'ok' or data.get('service') != 'circulo-atemporal-backend':
                       raise ValueError('Unexpected service identity')
-                  print('Circulo API health passed; no contact or database endpoint was called.')
+                  print(f'Circulo API health passed at {datetime.now(ZoneInfo("America/Sao_Paulo")).isoformat()}; only GET /health was called.')
                   sys.exit(0)
               except Exception as error:
                   print(f'Health attempt {attempt}/3 failed ({type(error).__name__}).')
