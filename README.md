@@ -1,8 +1,8 @@
 # Círculo Atemporal — monitor de disponibilidade
 
 Monitor diário, aproximadamente a cada cinco minutos, entre 8h e 22h no fuso
-America/Sao_Paulo. A primeira execução está prevista para 8h03; agendamentos do
-GitHub podem atrasar ou não executar. O monitor reduz a suspensão por inatividade,
+America/Sao_Paulo. A primeira execução está prevista para 8h06; agendamentos do
+GitHub podem atrasar por várias horas ou nem executar (inclusive observado em outubro de 2026). O monitor tenta reduzir a suspensão por inatividade,
 sem garantir que o plano gratuito permaneça sempre disponível.
 
 Consulta somente `GET https://circulo-atemporal-api.onrender.com/health`.
